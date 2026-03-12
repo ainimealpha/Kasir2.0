@@ -4,430 +4,237 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DoJajann - Nota</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg: #0a0a0a;
-            --surface: #141414;
-            --surface-elevated: #1a1a1a;
-            --border: #2a2a2a;
-            --orange: #ff6b35;
-            --orange-light: #ff8c5a;
-            --orange-dark: #e55a2b;
-            --text: #ffffff;
-            --text-secondary: #a0a0a0;
-            --text-muted: #666666;
-            --success: #22c55e;
-            --paper: #faf8f5;
-            --paper-text: #1a1a1a;
+            --bg: #0a0a0a; --surface: #141414; --surface-elevated: #1a1a1a;
+            --border: #2a2a2a; --orange: #ff6b35; --text: #ffffff;
+            --text-secondary: #a0a0a0; --success: #22c55e;
+            --paper: #ffffff; --paper-dark: #f5f5f5;
         }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Inter', sans-serif; background: var(--bg);
+            color: var(--text); min-height: 100vh;
         }
-
-        /* Header */
         .header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background: var(--surface); border-bottom: 1px solid var(--border);
+            padding: 16px 20px; position: sticky; top: 0; z-index: 100;
         }
-
         .header-content {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+            display: flex; align-items: center; gap: 16px;
         }
-
         .back-btn {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            color: var(--text);
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            transition: all 0.2s;
+            background: var(--surface-elevated); border: 1px solid var(--border);
+            color: var(--text); width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 20px;
         }
+        .header-title { font-size: 18px; font-weight: 700; }
 
-        .back-btn:active {
-            transform: scale(0.95);
-        }
-
-        .header-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        /* Receipt Container */
         .receipt-container {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 20px; display: flex; flex-direction: column;
+            align-items: center; padding-bottom: 140px;
         }
 
-        /* Receipt Paper */
+        /* Modern Receipt Card */
         #receipt {
-            background: var(--paper);
-            width: 100%;
-            max-width: 380px;
-            border-radius: 4px;
-            padding: 32px 24px;
-            font-family: 'Courier Prime', monospace;
-            color: var(--paper-text);
+            background: var(--paper); width: 100%; max-width: 400px;
+            border-radius: 24px; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             position: relative;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
-        /* Receipt Tear Effect */
-        #receipt::before,
-        #receipt::after {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 12px;
-            background-image: radial-gradient(circle at 6px 6px, var(--bg) 6px, transparent 6px);
-            background-size: 24px 12px;
-            position: absolute;
-            left: 0;
+        /* Receipt Header - Dark */
+        .receipt-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white; padding: 32px 24px; text-align: center;
+            position: relative;
         }
-
-        #receipt::before {
-            top: -12px;
+        .receipt-header::after {
+            content: ''; position: absolute; bottom: -20px; left: 0; right: 0;
+            height: 40px; background: var(--paper);
+            border-radius: 24px 24px 0 0;
         }
-
-        #receipt::after {
-            bottom: -12px;
-            transform: rotate(180deg);
-        }
-
-        /* Receipt Content */
         .receipt-brand {
-            text-align: center;
-            margin-bottom: 24px;
+            font-size: 32px; font-weight: 800; letter-spacing: -1px;
+            margin-bottom: 8px;
         }
-
-        .receipt-logo {
-            font-family: 'Inter', sans-serif;
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: var(--paper-text);
-        }
-
-        .receipt-logo span {
-            color: var(--orange);
-        }
-
+        .receipt-brand span { color: var(--orange); }
         .receipt-tagline {
-            font-family: 'Inter', sans-serif;
-            font-size: 10px;
-            color: #888;
-            letter-spacing: 2px;
-            margin-top: 4px;
-            text-transform: uppercase;
+            font-size: 12px; color: rgba(255,255,255,0.7);
+            letter-spacing: 2px; text-transform: uppercase;
         }
 
-        .receipt-divider {
-            border: none;
-            border-top: 1px dashed #c8c0b0;
-            margin: 16px 0;
+        /* Receipt Body */
+        .receipt-body {
+            padding: 24px; padding-top: 8px; font-family: 'Space Mono', monospace;
+            color: #1a1a1a;
         }
 
-        .receipt-meta {
-            font-size: 12px;
-            line-height: 1.8;
+        /* Ticket Notch Effect */
+        .ticket-notch {
+            display: flex; justify-content: space-between;
+            margin: 0 -24px; padding: 0 24px;
+        }
+        .notch {
+            width: 24px; height: 24px; background: var(--bg);
+            border-radius: 50%; margin-top: -12px;
         }
 
-        .receipt-meta-row {
-            display: flex;
-            justify-content: space-between;
+        /* Info Section */
+        .info-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 12px; margin-bottom: 20px; padding: 16px;
+            background: var(--paper-dark); border-radius: 12px;
         }
+        .info-item { display: flex; flex-direction: column; gap: 4px; }
+        .info-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-value { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+        .info-item.full-width { grid-column: 1 / -1; }
 
-        .receipt-meta-label {
-            color: #666;
+        /* Items Table */
+        .items-title {
+            font-size: 12px; font-weight: 700; color: #666;
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 2px dashed #ddd;
         }
-
-        .receipt-meta-value {
-            font-weight: 600;
+        .item-row {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 12px 0; border-bottom: 1px solid #eee;
+        }
+        .item-info { flex: 1; }
+        .item-name {
+            font-size: 14px; font-weight: 600; color: #1a1a1a;
+            margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
+        }
+        .item-emoji { font-size: 18px; }
+        .item-detail {
+            font-size: 12px; color: #666;
+            display: flex; gap: 12px;
+        }
+        .item-total {
+            font-size: 14px; font-weight: 700; color: #1a1a1a;
             text-align: right;
         }
 
-        .receipt-items-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: #888;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px dashed #c8c0b0;
+        /* Totals Section */
+        .totals-section {
+            margin-top: 20px; padding-top: 16px;
+            border-top: 2px dashed #ddd;
+        }
+        .total-row {
+            display: flex; justify-content: space-between;
+            padding: 6px 0; font-size: 13px; color: #666;
+        }
+        .total-row.discount { color: var(--success); }
+        .total-row.grand {
+            font-size: 18px; font-weight: 800; color: #1a1a1a;
+            padding-top: 12px; margin-top: 8px;
+            border-top: 2px solid #1a1a1a;
         }
 
-        .receipt-item {
-            display: flex;
-            font-size: 13px;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .receipt-item-name {
-            flex: 1;
-            padding-right: 12px;
-        }
-
-        .receipt-item-qty {
-            width: 32px;
+        /* QRIS Section - Modern */
+        .qris-section {
+            margin-top: 24px; padding: 24px;
+            background: var(--paper-dark); border-radius: 16px;
             text-align: center;
-            color: #666;
+        }
+        .qris-label {
+            font-size: 11px; color: #666; letter-spacing: 2px;
+            text-transform: uppercase; margin-bottom: 16px;
+        }
+        .qris-code {
+            width: 180px; height: 180px; margin: 0 auto;
+            background: white; border-radius: 16px;
+            padding: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .qris-code svg { width: 100%; height: 100%; }
+        .qris-note {
+            margin-top: 12px; font-size: 12px; color: #888;
         }
 
-        .receipt-item-price {
-            width: 70px;
-            text-align: right;
-        }
-
-        .receipt-item-subtotal {
-            width: 80px;
-            text-align: right;
-            font-weight: 700;
-        }
-
-        .receipt-totals {
-            margin-top: 8px;
-        }
-
-        .receipt-total-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            padding: 4px 0;
-            color: #444;
-        }
-
-        .receipt-total-row.discount {
-            color: #22c55e;
-        }
-
-        .receipt-total-row.grand {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--paper-text);
-            padding-top: 12px;
-            margin-top: 8px;
-            border-top: 2px solid var(--paper-text);
-        }
-
+        /* Footer */
         .receipt-footer {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 11px;
-            color: #888;
-            line-height: 1.8;
+            text-align: center; padding: 24px; padding-top: 0;
         }
-
-        .receipt-barcode {
-            display: flex;
-            justify-content: center;
-            gap: 2px;
-            margin: 16px auto;
-            height: 40px;
-            align-items: flex-end;
+        .thank-you {
+            font-size: 16px; font-weight: 700; color: #1a1a1a;
+            margin-bottom: 8px;
         }
-
+        .footer-text {
+            font-size: 11px; color: #888; line-height: 1.6;
+        }
+        .barcode-section {
+            margin-top: 20px; padding: 16px;
+            background: var(--paper-dark); border-radius: 12px;
+        }
+        .barcode {
+            display: flex; justify-content: center; gap: 2px;
+            height: 50px; align-items: flex-end;
+        }
         .barcode-bar {
-            background: var(--paper-text);
-            width: 2px;
-            border-radius: 1px;
+            background: #1a1a1a; border-radius: 1px;
         }
-
-        /* QRIS Section */
-        .receipt-qris {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px dashed #c8c0b0;
-        }
-
-        .receipt-qris-label {
-            font-family: 'Inter', sans-serif;
-            font-size: 11px;
-            color: #888;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-
-        .receipt-qris img {
-            width: 160px;
-            height: 160px;
-            object-fit: contain;
-            border-radius: 8px;
-            background: white;
-            padding: 8px;
-        }
-
-        .receipt-qris-note {
-            font-family: 'Inter', sans-serif;
-            font-size: 10px;
-            color: #aaa;
-            margin-top: 8px;
+        .barcode-number {
+            margin-top: 8px; font-size: 12px; letter-spacing: 4px;
+            color: #666;
         }
 
         /* Bottom Bar */
         .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 16px 20px;
-            padding-bottom: calc(16px + env(safe-area-inset-bottom));
-            display: flex;
-            gap: 12px;
-            z-index: 50;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--surface); border-top: 1px solid var(--border);
+            padding: 16px 20px; padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            display: flex; gap: 12px; z-index: 50;
         }
-
         .btn {
-            flex: 1;
-            border: none;
-            border-radius: 16px;
-            padding: 16px 24px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s;
+            flex: 1; border: none; border-radius: 16px;
+            padding: 16px 24px; font-size: 16px; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center;
+            justify-content: center; gap: 8px;
         }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
         .btn-secondary {
-            background: var(--surface-elevated);
-            color: var(--text);
+            background: var(--surface-elevated); color: var(--text);
             border: 1px solid var(--border);
         }
+        .btn-primary { background: var(--orange); color: white; }
 
-        .btn-primary {
-            background: var(--orange);
-            color: white;
+        .new-order-btn {
+            margin-top: 20px; background: transparent;
+            border: 2px solid var(--border); color: var(--text-secondary);
+            padding: 14px 24px; border-radius: 12px;
+            font-size: 14px; font-weight: 600; cursor: pointer;
         }
 
-        /* Toast */
         .toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
+            position: fixed; bottom: 100px; left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: var(--success);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 300;
-            opacity: 0;
-            transition: all 0.3s;
-            white-space: nowrap;
+            background: var(--success); color: white;
+            padding: 14px 24px; border-radius: 12px;
+            font-size: 14px; font-weight: 600; z-index: 300;
+            opacity: 0; transition: all 0.3s;
         }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* Nota Number */
-        .nota-number {
-            text-align: center;
-            margin-top: 12px;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        /* Content padding */
-        .content-padding {
-            padding-bottom: 100px;
-        }
-
-        /* Loading overlay */
         .loading-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 400;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 400; opacity: 0; visibility: hidden; transition: all 0.3s;
         }
-
-        .loading-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .loading-overlay.show { opacity: 1; visibility: visible; }
         .loading-spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid var(--border);
-            border-top-color: var(--orange);
-            border-radius: 50%;
+            width: 48px; height: 48px; border: 4px solid var(--border);
+            border-top-color: var(--orange); border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* New Order Button */
-        .new-order-btn {
-            margin-top: 20px;
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-content">
             <button class="back-btn" onclick="goBack()">←</button>
@@ -435,117 +242,118 @@
         </div>
     </header>
 
-    <!-- Receipt -->
-    <div class="receipt-container content-padding">
+    <div class="receipt-container">
         <div id="receipt">
-            <div class="receipt-brand">
-                <div class="receipt-logo">Do<span>Jajann</span></div>
+            <!-- Header -->
+            <div class="receipt-header">
+                <div class="receipt-brand">Do<span>Jajann</span></div>
                 <div class="receipt-tagline">Kasir Digital</div>
             </div>
 
-            <hr class="receipt-divider">
+            <div class="receipt-body">
+                <!-- Ticket Notch -->
+                <div class="ticket-notch">
+                    <div class="notch"></div>
+                    <div class="notch"></div>
+                    <div class="notch"></div>
+                    <div class="notch"></div>
+                    <div class="notch"></div>
+                    <div class="notch"></div>
+                    <div class="notch"></div>
+                    <div class="notch"></div>
+                    <div class="notch"></div>
+                    <div class="notch"></div>
+                </div>
 
-            <div class="receipt-meta">
-                <div class="receipt-meta-row">
-                    <span class="receipt-meta-label">No. Nota</span>
-                    <span class="receipt-meta-value" id="nota-number">-</span>
+                <!-- Info -->
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">No. Nota</span>
+                        <span class="info-value" id="nota-number">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tanggal</span>
+                        <span class="info-value" id="receipt-date">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Waktu</span>
+                        <span class="info-value" id="receipt-time">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tipe</span>
+                        <span class="info-value" id="receipt-type">-</span>
+                    </div>
+                    <div class="info-item full-width" id="customer-info" style="display: none;">
+                        <span class="info-label">Pelanggan</span>
+                        <span class="info-value" id="receipt-customer">-</span>
+                    </div>
                 </div>
-                <div class="receipt-meta-row">
-                    <span class="receipt-meta-label">Tanggal</span>
-                    <span class="receipt-meta-value" id="receipt-date">-</span>
+
+                <!-- Items -->
+                <div class="items-title">Detail Pesanan</div>
+                <div id="receipt-items"></div>
+
+                <!-- Totals -->
+                <div class="totals-section">
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span id="receipt-subtotal">Rp 0</span>
+                    </div>
+                    <div class="total-row discount" id="receipt-discount-row" style="display: none;">
+                        <span>Diskon</span>
+                        <span id="receipt-discount">- Rp 0</span>
+                    </div>
+                    <div class="total-row grand">
+                        <span>TOTAL</span>
+                        <span id="receipt-total">Rp 0</span>
+                    </div>
                 </div>
-                <div class="receipt-meta-row">
-                    <span class="receipt-meta-label">Waktu</span>
-                    <span class="receipt-meta-value" id="receipt-time">-</span>
+
+                <!-- QRIS -->
+                <div class="qris-section">
+                    <div class="qris-label">Scan untuk pembayaran</div>
+                    <div class="qris-code" id="qris-container">
+                        <!-- QRIS SVG akan di-generate -->
+                    </div>
+                    <div class="qris-note">Dukungan pembayaran digital</div>
                 </div>
-                <div class="receipt-meta-row">
-                    <span class="receipt-meta-label">Kasir</span>
-                    <span class="receipt-meta-value">DoJajann</span>
-                </div>
-                <div class="receipt-meta-row" id="receipt-customer-row" style="display: none;">
-                    <span class="receipt-meta-label">Pelanggan</span>
-                    <span class="receipt-meta-value" id="receipt-customer">-</span>
-                </div>
-                <div class="receipt-meta-row">
-                    <span class="receipt-meta-label">Tipe</span>
-                    <span class="receipt-meta-value" id="receipt-type">-</span>
+
+                <!-- Barcode -->
+                <div class="barcode-section">
+                    <div class="barcode" id="barcode"></div>
+                    <div class="barcode-number" id="barcode-number"></div>
                 </div>
             </div>
 
-            <hr class="receipt-divider">
-
-            <div class="receipt-items-header">
-                <span>Item</span>
-                <span>Qty</span>
-                <span>Subtotal</span>
-            </div>
-
-            <div id="receipt-items">
-                <!-- Items will be rendered here -->
-            </div>
-
-            <hr class="receipt-divider">
-
-            <div class="receipt-totals">
-                <div class="receipt-total-row">
-                    <span>Subtotal</span>
-                    <span id="receipt-subtotal">Rp 0</span>
-                </div>
-                <div class="receipt-total-row discount" id="receipt-discount-row" style="display: none;">
-                    <span>Diskon</span>
-                    <span id="receipt-discount">- Rp 0</span>
-                </div>
-                <div class="receipt-total-row grand">
-                    <span>TOTAL</span>
-                    <span id="receipt-total">Rp 0</span>
-                </div>
-            </div>
-
-            <div class="receipt-barcode" id="barcode">
-                <!-- Barcode bars generated by JS -->
-            </div>
-
+            <!-- Footer -->
             <div class="receipt-footer">
-                <div>Terima kasih telah berbelanja</div>
-                <div>di DoJajann</div>
-                <div style="margin-top: 8px; font-size: 10px;">Simpan struk ini sebagai bukti pembayaran</div>
-            </div>
-
-            <div class="receipt-qris">
-                <div class="receipt-qris-label">Scan untuk pembayaran</div>
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Crect fill='white' width='160' height='160'/%3E%3Cg fill='black'%3E%3Cpath d='M20 20h40v40H20zM30 30h20v20H30z'/%3E%3Cpath d='M100 20h40v40h-40zM110 30h20v20h-20z'/%3E%3Cpath d='M20 100h40v40H20zM30 110h20v20H30z'/%3E%3Cpath d='M70 20h10v10H70zM90 20h10v10H90zM70 40h10v10H70zM80 30h10v10H80zM70 70h10v10H70zM90 70h10v10H90zM100 70h10v10h-10zM120 70h10v10h-10zM130 80h10v10h-10zM140 90h10v10h-10zM130 100h10v10h-10zM120 110h10v10h-10zM110 120h10v10h-10zM100 130h10v10h-10zM90 140h10v10H90zM80 130h10v10H80zM70 120h10v10H70zM60 110h10v10H60zM50 100h10v10H50zM60 90h10v10H60zM70 80h10v10H70zM80 70h10v10H80zM90 60h10v10H90zM100 50h10v10h-10zM110 40h10v10h-10zM120 50h10v10h-10zM130 60h10v10h-10zM140 70h10v10h-10zM140 50h10v10h-10zM140 30h10v10h-10zM120 90h10v10h-10zM110 100h10v10h-10zM100 110h10v10h-10zM90 120h10v10H90zM80 110h10v10H80zM70 100h10v10H70zM60 80h10v10H60zM50 70h10v10H50zM40 60h10v10H40zM30 50h10v10H30zM40 40h10v10H40zM50 30h10v10H50zM60 20h10v10H60zM80 90h10v10H80zM90 80h10v10H90zM100 90h10v10h-10zM110 80h10v10h-10zM120 100h10v10h-10zM130 120h10v10h-10zM140 130h10v10h-10zM130 140h10v10h-10zM110 130h10v10h-10zM90 100h10v10H90zM80 50h10v10H80zM90 40h10v10H90zM100 60h10v10h-10zM110 70h10v10h-10zM120 80h10v10h-10zM130 90h10v10h-10zM140 100h10v10h-10zM140 110h10v10h-10zM140 120h10v10h-10zM140 140h10v10h-10zM120 120h10v10h-10zM110 110h10v10h-10zM100 100h10v10h-10zM80 80h10v10H80zM70 90h10v10H70zM60 100h10v10H60zM50 110h10v10H50zM40 120h10v10H40zM30 130h10v10H30zM20 140h10v10H20zM30 120h10v10H30zM40 110h10v10H40zM50 90h10v10H50zM60 70h10v10H60zM70 60h10v10H70zM80 40h10v10H80zM90 30h10v10H90zM100 40h10v10h-10zM110 50h10v10h-10zM120 60h10v10h-10zM130 70h10v10h-10zM140 80h10v10h-10zM130 100h10v10h-10zM120 110h10v10h-10zM110 120h10v10h-10zM100 130h10v10h-10zM90 140h10v10H90zM80 130h10v10H80zM70 110h10v10H70zM60 120h10v10H60zM50 130h10v10H50zM40 140h10v10H40zM30 140h10v10H30zM20 130h10v10H20zM20 110h10v10H20zM20 90h10v10H20zM20 70h10v10H20zM20 50h10v10H20zM20 30h10v10H20zM40 20h10v10H40zM60 40h10v10H60zM50 50h10v10H50zM40 70h10v10H40zM30 80h10v10H30zM20 60h10v10H20zM30 40h10v10H30zM40 30h10v10H40zM50 20h10v10H50zM70 30h10v10H70zM80 20h10v10H80zM90 50h10v10H90zM100 30h10v10h-10zM110 20h10v10h-10zM130 20h10v10h-10zM140 40h10v10h-10zM130 40h10v10h-10zM120 40h10v10h-10zM140 60h10v10h-10zM130 50h10v10h-10zM120 70h10v10h-10zM110 60h10v10h-10zM100 80h10v10h-10zM90 70h10v10H90zM80 100h10v10H80zM70 130h10v10H70zM60 130h10v10H60zM50 120h10v10H50zM40 100h10v10H40zM30 110h10v10H30zM20 80h10v10H20zM30 70h10v10H30zM40 80h10v10H40zM50 60h10v10H50zM60 50h10v10H60zM70 40h10v10H70zM80 60h10v10H80zM90 90h10v10H90zM100 120h10v10h-10zM110 140h10v10h-10zM120 130h10v10h-10zM130 110h10v10h-10zM140 100h10v10h-10z'/%3E%3C/g%3E%3C/svg%3E" alt="QRIS">
-                <div class="receipt-qris-note">Scan QRIS untuk pembayaran</div>
+                <div class="thank-you">Terima Kasih!</div>
+                <div class="footer-text">
+                    Simpan struk ini sebagai bukti pembayaran<br>
+                    DoJajann - Kasir Digital
+                </div>
             </div>
         </div>
 
-        <div class="nota-number" id="nota-display"></div>
-
-        <button class="new-order-btn" onclick="newOrder()">
-            🔄 Buat Pesanan Baru
-        </button>
+        <button class="new-order-btn" onclick="newOrder()">🔄 Buat Pesanan Baru</button>
     </div>
 
-    <!-- Bottom Bar -->
     <div class="bottom-bar">
         <button class="btn btn-secondary" onclick="goBack()">← Edit</button>
-        <button class="btn btn-primary" onclick="downloadReceipt()">💾 Simpan Nota</button>
+        <button class="btn btn-primary" onclick="downloadReceipt()">💾 Simpan</button>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
-
-    <!-- Loading -->
     <div class="loading-overlay" id="loading">
         <div class="loading-spinner"></div>
     </div>
 
     <script>
-        let cart = {};
-        let settings = {};
-        let summary = {};
+        let cart = {}, settings = {}, summary = {};
 
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
+            generateQRIS();
             generateBarcode();
         });
 
@@ -562,41 +370,38 @@
         }
 
         function renderReceipt() {
-            // Generate nota number
             const notaNum = generateNotaNumber();
             document.getElementById('nota-number').textContent = notaNum;
-            document.getElementById('nota-display').textContent = `Nota: ${notaNum}`;
+            document.getElementById('barcode-number').textContent = notaNum;
 
-            // Set date and time
             document.getElementById('receipt-date').textContent = settings.date || '-';
             document.getElementById('receipt-time').textContent = settings.time || '-';
+            document.getElementById('receipt-type').textContent = 
+                `${settings.orderTypeEmoji || '🍽️'} ${settings.orderType || 'Dine In'}`;
 
-            // Customer
             if (settings.customer) {
                 document.getElementById('receipt-customer').textContent = settings.customer;
-                document.getElementById('receipt-customer-row').style.display = 'flex';
+                document.getElementById('customer-info').style.display = 'flex';
             }
 
-            // Order type
-            document.getElementById('receipt-type').textContent = 
-                `${settings.orderTypeEmoji || '🍽'} ${settings.orderType || 'Dine In'}`;
-
-            // Items
             const itemsContainer = document.getElementById('receipt-items');
             const items = Object.values(cart);
             
             itemsContainer.innerHTML = items.map(item => `
-                <div class="receipt-item">
-                    <span class="receipt-item-name">${item.emoji} ${item.name}</span>
-                    <span class="receipt-item-qty">${item.qty}x</span>
-                    <span class="receipt-item-subtotal">Rp ${formatPrice(item.price * item.qty)}</span>
-                </div>
-                <div class="receipt-item" style="margin-bottom: 12px;">
-                    <span class="receipt-item-name" style="color: #888; font-size: 11px;">@ Rp ${formatPrice(item.price)}</span>
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="item-name">
+                            <span class="item-emoji">${item.emoji}</span>
+                            ${item.name}
+                        </div>
+                        <div class="item-detail">
+                            <span>${item.qty}x @ Rp ${formatPrice(item.price)}</span>
+                        </div>
+                    </div>
+                    <div class="item-total">Rp ${formatPrice(item.price * item.qty)}</div>
                 </div>
             `).join('');
 
-            // Totals
             const subtotal = summary.subtotal || Object.values(cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
             const discount = summary.discount || 0;
             const total = summary.total || (subtotal - discount);
@@ -620,13 +425,63 @@
             return `DJ${year}${month}${day}-${random}`;
         }
 
+        function generateQRIS() {
+            const container = document.getElementById('qris-container');
+            const total = summary.total || 0;
+            
+            // Generate QRIS-style pattern
+            const size = 148;
+            const cellSize = 4;
+            const cells = size / cellSize;
+            
+            let svg = `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
+            
+            // Background
+            svg += `<rect width="${size}" height="${size}" fill="white"/>`;
+            
+            // Finder patterns (corners)
+            const patterns = [[0,0], [cells-7,0], [0,cells-7]];
+            patterns.forEach(([px, py]) => {
+                // Outer square
+                for(let y=0; y<7; y++) {
+                    for(let x=0; x<7; x++) {
+                        if(y===0 || y===6 || x===0 || x===6 || (y>=2 && y<=4 && x>=2 && x<=4)) {
+                            svg += `<rect x="${(px+x)*cellSize}" y="${(py+y)*cellSize}" width="${cellSize}" height="${cellSize}" fill="#1a1a1a"/>`;
+                        }
+                    }
+                }
+            });
+            
+            // Random data pattern
+            const seed = total.toString();
+            for(let y=7; y<cells-7; y++) {
+                for(let x=7; x<cells; x++) {
+                    const hash = Math.sin(x * 12.9898 + y * 78.233 + total) * 43758.5453;
+                    if((hash - Math.floor(hash)) > 0.5) {
+                        svg += `<rect x="${x*cellSize}" y="${y*cellSize}" width="${cellSize}" height="${cellSize}" fill="#1a1a1a"/>`;
+                    }
+                }
+            }
+            
+            // Vertical timing pattern
+            for(let y=7; y<cells-7; y++) {
+                if(y % 2 === 0) {
+                    svg += `<rect x="${6*cellSize}" y="${y*cellSize}" width="${cellSize}" height="${cellSize}" fill="#1a1a1a"/>`;
+                }
+            }
+            
+            svg += '</svg>';
+            container.innerHTML = svg;
+        }
+
         function generateBarcode() {
             const container = document.getElementById('barcode');
-            const patterns = [2, 4, 6, 3, 5, 2, 7, 4, 3, 6, 2, 5, 4, 7, 3, 5, 2, 6, 4, 3, 5, 7, 2, 4, 6, 3, 5, 4, 2, 7];
+            const patterns = [3,5,2,7,4,6,3,5,8,2,4,6,3,7,5,2,6,4,8,3,5,7,2,4,6];
             
-            container.innerHTML = patterns.map((height, i) => {
-                const width = Math.random() > 0.7 ? 3 : 2;
-                return `<div class="barcode-bar" style="height: ${height * 4}px; width: ${width}px;"></div>`;
+            container.innerHTML = patterns.map((h, i) => {
+                const w = Math.random() > 0.6 ? 3 : 2;
+                const height = 20 + (h * 3);
+                return `<div class="barcode-bar" style="height:${height}px;width:${w}px;"></div>`;
             }).join('');
         }
 
@@ -640,13 +495,11 @@
             
             try {
                 loading.classList.add('show');
-                
-                // Wait for fonts to load
                 await document.fonts.ready;
                 
                 const canvas = await html2canvas(receipt, {
-                    scale: 2,
-                    backgroundColor: '#faf8f5',
+                    scale: 3,
+                    backgroundColor: '#ffffff',
                     useCORS: true,
                     logging: false,
                     windowWidth: receipt.scrollWidth,
@@ -661,19 +514,16 @@
                 
                 showToast('✅ Nota berhasil disimpan!');
             } catch (error) {
-                console.error('Error:', error);
-                showToast('❌ Gagal menyimpan nota');
+                console.error(error);
+                showToast('❌ Gagal menyimpan');
             } finally {
                 loading.classList.remove('show');
             }
         }
 
         function newOrder() {
-            // Clear all data
             localStorage.removeItem('dojajann_cart');
             localStorage.removeItem('dojajann_summary');
-            // Keep settings for convenience
-            
             window.location.href = 'index.html';
         }
 
@@ -690,4 +540,3 @@
     </script>
 </body>
 </html>
-
