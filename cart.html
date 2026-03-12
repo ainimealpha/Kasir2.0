@@ -6,394 +6,172 @@
     <title>DoJajann - Review Pesanan</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg: #0a0a0a;
-            --surface: #141414;
-            --surface-elevated: #1a1a1a;
-            --border: #2a2a2a;
-            --orange: #ff6b35;
-            --orange-light: #ff8c5a;
-            --orange-dark: #e55a2b;
-            --text: #ffffff;
-            --text-secondary: #a0a0a0;
-            --text-muted: #666666;
-            --success: #22c55e;
-            --danger: #ef4444;
+            --bg: #0a0a0a; --surface: #141414; --surface-elevated: #1a1a1a;
+            --border: #2a2a2a; --orange: #ff6b35; --text: #ffffff;
+            --text-secondary: #a0a0a0; --success: #22c55e; --danger: #ef4444;
         }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Inter', sans-serif; background: var(--bg);
+            color: var(--text); min-height: 100vh;
         }
-
-        /* Header */
         .header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background: var(--surface); border-bottom: 1px solid var(--border);
+            padding: 16px 20px; position: sticky; top: 0; z-index: 100;
         }
-
         .header-content {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+            display: flex; align-items: center; gap: 16px;
         }
-
         .back-btn {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            color: var(--text);
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            transition: all 0.2s;
+            background: var(--surface-elevated); border: 1px solid var(--border);
+            color: var(--text); width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 20px;
         }
-
-        .back-btn:active {
-            transform: scale(0.95);
-        }
-
-        .header-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        /* Order Info */
+        .header-title { font-size: 18px; font-weight: 700; }
+        
         .order-info {
-            background: var(--surface);
-            padding: 16px 20px;
+            background: var(--surface); padding: 16px 20px;
             border-bottom: 1px solid var(--border);
         }
-
         .info-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            font-size: 14px;
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 6px 0; font-size: 14px;
         }
+        .info-label { color: var(--text-secondary); }
+        .info-value { font-weight: 600; }
 
-        .info-label {
-            color: var(--text-secondary);
+        .section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 20px 12px;
         }
-
-        .info-value {
-            font-weight: 600;
-        }
-
-        /* Section Title */
         .section-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 20px;
-            padding-bottom: 12px;
+            font-size: 13px; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .clear-btn {
+            background: transparent; border: none; color: var(--danger);
+            font-size: 13px; font-weight: 600; cursor: pointer;
         }
 
-        /* Cart Items */
-        .cart-items {
-            padding: 0 20px;
-        }
-
+        .cart-items { padding: 0 20px; }
         .cart-item {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            gap: 16px;
-            align-items: center;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; padding: 16px; margin-bottom: 12px;
+            display: flex; gap: 14px; align-items: center;
         }
-
         .item-emoji {
-            font-size: 36px;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--surface-elevated);
-            border-radius: 14px;
+            width: 52px; height: 52px; background: var(--surface-elevated);
+            border-radius: 14px; display: flex; align-items: center;
+            justify-content: center; font-size: 28px; flex-shrink: 0;
         }
-
-        .item-details {
-            flex: 1;
-        }
-
+        .item-details { flex: 1; min-width: 0; }
         .item-name {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 4px;
+            font-size: 15px; font-weight: 600; margin-bottom: 4px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-
-        .item-price {
-            font-size: 14px;
-            color: var(--orange);
-            font-weight: 600;
-        }
-
+        .item-price { font-size: 14px; color: var(--orange); font-weight: 600; }
         .item-subtotal {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: 2px;
+            font-size: 12px; color: var(--text-secondary); margin-top: 2px;
         }
-
+        .item-actions {
+            display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+        }
         .qty-control {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--surface-elevated);
-            border-radius: 12px;
-            padding: 4px;
+            display: flex; align-items: center; gap: 10px;
+            background: var(--surface-elevated); border-radius: 10px; padding: 4px;
         }
-
         .qty-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            border: none;
-            background: var(--surface);
-            color: var(--text);
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+            width: 32px; height: 32px; border-radius: 8px; border: none;
+            background: var(--surface); color: var(--text); font-size: 16px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
-
-        .qty-btn:active {
-            background: var(--orange);
-        }
-
-        .qty-value {
-            font-size: 16px;
-            font-weight: 700;
-            min-width: 24px;
-            text-align: center;
-        }
-
+        .qty-btn:active { background: var(--orange); }
+        .qty-value { font-size: 15px; font-weight: 700; min-width: 24px; text-align: center; }
         .delete-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            border: none;
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 8px;
+            font-size: 12px; color: var(--danger); background: transparent;
+            border: none; cursor: pointer; font-weight: 500;
         }
 
-        /* Discount Section */
-        .discount-section {
-            padding: 0 20px 20px;
-        }
-
+        .discount-section { padding: 0 20px 20px; }
         .discount-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 16px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; padding: 16px;
         }
-
         .discount-header {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
+            display: flex; gap: 8px; margin-bottom: 12px;
         }
-
         .discount-type-btn {
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--surface-elevated);
-            color: var(--text);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            flex: 1; padding: 12px; border-radius: 12px;
+            border: 1px solid var(--border); background: var(--surface-elevated);
+            color: var(--text); font-size: 14px; font-weight: 600; cursor: pointer;
         }
-
-        .discount-type-btn.active {
-            background: var(--orange);
-            border-color: var(--orange);
+        .discount-type-btn.active { background: var(--orange); border-color: var(--orange); }
+        .discount-input-wrapper {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--surface-elevated); border-radius: 12px;
+            padding: 4px 4px 4px 16px; border: 1px solid var(--border);
         }
-
+        .discount-input-wrapper:focus-within { border-color: var(--orange); }
         .discount-input {
-            width: 100%;
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 15px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            outline: none;
+            flex: 1; background: transparent; border: none; color: var(--text);
+            font-size: 16px; outline: none; padding: 10px 0;
         }
-
-        .discount-input:focus {
-            border-color: var(--orange);
-        }
-
-        /* Summary */
-        .summary-section {
-            padding: 0 20px 20px;
-        }
+        .discount-prefix { color: var(--text-secondary); font-weight: 600; }
 
         .summary-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; padding: 20px; margin: 0 20px 20px;
         }
-
         .summary-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            font-size: 15px;
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 8px 0; font-size: 15px;
         }
-
-        .summary-row.discount {
-            color: var(--success);
-        }
-
+        .summary-row.discount { color: var(--success); }
         .summary-row.total {
-            font-size: 18px;
-            font-weight: 700;
-            padding-top: 16px;
-            margin-top: 8px;
-            border-top: 1px solid var(--border);
+            font-size: 20px; font-weight: 700;
+            padding-top: 16px; margin-top: 8px;
+            border-top: 2px solid var(--border);
         }
+        .summary-row.total .amount { color: var(--orange); }
 
-        .summary-row.total .amount {
-            color: var(--orange);
-        }
-
-        /* Bottom Bar */
         .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 16px 20px;
-            padding-bottom: calc(16px + env(safe-area-inset-bottom));
-            display: flex;
-            gap: 12px;
-            z-index: 50;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--surface); border-top: 1px solid var(--border);
+            padding: 16px 20px; padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            display: flex; gap: 12px;
         }
-
         .btn {
-            flex: 1;
-            border: none;
-            border-radius: 16px;
-            padding: 16px 24px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s;
+            flex: 1; border: none; border-radius: 16px; padding: 16px 24px;
+            font-size: 16px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
         .btn-secondary {
-            background: var(--surface-elevated);
-            color: var(--text);
-            border: 1px solid var(--border);
+            background: var(--surface-elevated); color: var(--text);
+            border: 1px solid var(--border); flex: 0.4;
         }
+        .btn-primary { background: var(--orange); color: white; flex: 0.6; }
+        .btn-primary:disabled { background: var(--text-secondary); cursor: not-allowed; }
 
-        .btn-primary {
-            background: var(--orange);
-            color: white;
-        }
-
-        .btn-primary:disabled {
-            background: var(--text-muted);
-            cursor: not-allowed;
-        }
-
-        /* Empty State */
         .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
+            text-align: center; padding: 80px 20px; color: var(--text-secondary);
         }
+        .empty-icon { font-size: 64px; margin-bottom: 16px; }
+        .empty-text { font-size: 16px; margin-bottom: 24px; }
 
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-        }
-
-        .empty-state-text {
-            font-size: 16px;
-            margin-bottom: 24px;
-        }
-
-        /* Content padding */
-        .content-padding {
-            padding-bottom: 100px;
-        }
-
-        /* Toast */
         .toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
+            position: fixed; bottom: 100px; left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: var(--success);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 300;
-            opacity: 0;
-            transition: all 0.3s;
-            white-space: nowrap;
+            background: var(--success); color: white; padding: 14px 24px;
+            border-radius: 12px; font-size: 14px; font-weight: 600;
+            z-index: 300; opacity: 0; transition: all 0.3s;
         }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .content-padding { padding-bottom: 100px; }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-content">
             <button class="back-btn" onclick="goBack()">←</button>
@@ -401,7 +179,6 @@
         </div>
     </header>
 
-    <!-- Order Info -->
     <div class="order-info" id="order-info">
         <div class="info-row">
             <span class="info-label">Tipe Order</span>
@@ -417,59 +194,60 @@
         </div>
     </div>
 
-    <!-- Cart Items -->
-    <div class="section-title">🛒 Detail Pesanan</div>
-    <div class="cart-items" id="cart-items">
-        <!-- Items will be rendered here -->
+    <div class="section-header">
+        <span class="section-title">🛒 Detail Pesanan</span>
+        <button class="clear-btn" onclick="clearCart()">Kosongkan</button>
     </div>
 
-    <!-- Empty State -->
+    <div class="cart-items" id="cart-items"></div>
+
     <div class="empty-state" id="empty-state" style="display: none;">
-        <div class="empty-state-icon">🛒</div>
-        <div class="empty-state-text">Keranjang masih kosong</div>
-        <button class="btn btn-primary" onclick="goBack()">Kembali ke Menu</button>
+        <div class="empty-icon">🛒</div>
+        <div class="empty-text">Keranjang masih kosong</div>
+        <button class="btn btn-primary" onclick="goBack()" style="max-width: 200px;">Kembali ke Menu</button>
     </div>
 
     <div class="content-padding" id="content-area">
-        <!-- Discount -->
         <div class="discount-section">
-            <div class="section-title" style="padding-left: 0; padding-top: 0;">🏷️ Diskon</div>
+            <div class="section-header" style="padding-left: 0; padding-right: 0;">
+                <span class="section-title">🏷️ Diskon</span>
+            </div>
             <div class="discount-card">
                 <div class="discount-header">
-                    <button class="discount-type-btn active" onclick="setDiscountType('pct')" id="btn-pct">%</button>
-                    <button class="discount-type-btn" onclick="setDiscountType('rp')" id="btn-rp">Rp</button>
+                    <button class="discount-type-btn active" onclick="setDiscountType('pct')" id="btn-pct">Persen %</button>
+                    <button class="discount-type-btn" onclick="setDiscountType('rp')" id="btn-rp">Rupiah Rp</button>
                 </div>
-                <input type="number" class="discount-input" id="discount-input" placeholder="0" min="0" oninput="calculateSummary()">
+                <div class="discount-input-wrapper">
+                    <span class="discount-prefix" id="discount-prefix">%</span>
+                    <input type="number" class="discount-input" id="discount-input" placeholder="0" min="0" oninput="calculateSummary()">
+                </div>
             </div>
         </div>
 
-        <!-- Summary -->
-        <div class="summary-section">
-            <div class="section-title" style="padding-left: 0; padding-top: 0;">💰 Ringkasan</div>
-            <div class="summary-card">
-                <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span id="summary-subtotal">Rp 0</span>
-                </div>
-                <div class="summary-row discount" id="discount-row" style="display: none;">
-                    <span>Diskon</span>
-                    <span id="summary-discount">- Rp 0</span>
-                </div>
-                <div class="summary-row total">
-                    <span>TOTAL</span>
-                    <span class="amount" id="summary-total">Rp 0</span>
-                </div>
+        <div class="section-header" style="padding-bottom: 12px;">
+            <span class="section-title">💰 Ringkasan</span>
+        </div>
+        <div class="summary-card">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="summary-subtotal">Rp 0</span>
+            </div>
+            <div class="summary-row discount" id="discount-row" style="display: none;">
+                <span>Diskon</span>
+                <span id="summary-discount">- Rp 0</span>
+            </div>
+            <div class="summary-row total">
+                <span>TOTAL BAYAR</span>
+                <span class="amount" id="summary-total">Rp 0</span>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Bar -->
-    <div class="bottom-bar" id="bottom-bar">
-        <button class="btn btn-secondary" onclick="goBack()">← Kembali</button>
+    <div class="bottom-bar">
+        <button class="btn btn-secondary" onclick="goBack()">←</button>
         <button class="btn btn-primary" onclick="goToReceipt()">Bayar →</button>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
     <script>
@@ -501,13 +279,16 @@
         function showEmptyState() {
             document.getElementById('cart-items').style.display = 'none';
             document.getElementById('content-area').style.display = 'none';
-            document.getElementById('bottom-bar').style.display = 'none';
+            document.querySelector('.section-header').style.display = 'none';
+            document.querySelector('.bottom-bar').style.display = 'none';
             document.getElementById('empty-state').style.display = 'block';
         }
 
         function renderOrderInfo() {
-            document.getElementById('info-type').textContent = `${settings.orderTypeEmoji || '🍽'} ${settings.orderType || 'Dine In'}`;
-            document.getElementById('info-datetime').textContent = `${settings.date || '-'} ${settings.time || ''}`;
+            document.getElementById('info-type').textContent = 
+                `${settings.orderTypeEmoji || '🍽️'} ${settings.orderType || 'Dine In'}`;
+            document.getElementById('info-datetime').textContent = 
+                `${settings.date || '-'} ${settings.time || ''}`;
             
             if (settings.customer) {
                 document.getElementById('info-customer').textContent = settings.customer;
@@ -524,57 +305,72 @@
                     <div class="item-emoji">${item.emoji}</div>
                     <div class="item-details">
                         <div class="item-name">${item.name}</div>
-                        <div class="item-price">Rp ${formatPrice(item.price)}</div>
-                        <div class="item-subtotal">Rp ${formatPrice(item.price * item.qty)}</div>
+                        <div class="item-price">Rp ${formatPrice(item.price)} x ${item.qty}</div>
+                        <div class="item-subtotal">= Rp ${formatPrice(item.price * item.qty)}</div>
                     </div>
-                    <div class="qty-control">
-                        <button class="qty-btn" onclick="updateQty(${item.id}, -1)">−</button>
-                        <span class="qty-value">${item.qty}</span>
-                        <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                    <div class="item-actions">
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="updateQty(${item.id}, -1)">−</button>
+                            <span class="qty-value">${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                        </div>
+                        <button class="delete-btn" onclick="removeItem(${item.id})">Hapus</button>
                     </div>
-                    <button class="delete-btn" onclick="removeItem(${item.id})">🗑</button>
                 </div>
             `).join('');
         }
 
         function updateQty(itemId, change) {
-            if (cart[itemId]) {
-                cart[itemId].qty += change;
-                if (cart[itemId].qty <= 0) {
-                    delete cart[itemId];
-                }
-                saveCart();
+            if (!cart[itemId]) return;
+            
+            cart[itemId].qty += change;
+            if (cart[itemId].qty <= 0) {
+                delete cart[itemId];
+            }
+            
+            saveCart();
+            
+            if (Object.keys(cart).length === 0) {
+                location.reload();
+            } else {
                 renderCartItems();
                 calculateSummary();
-                
-                if (Object.keys(cart).length === 0) {
-                    showEmptyState();
-                }
             }
         }
 
         function removeItem(itemId) {
             delete cart[itemId];
             saveCart();
-            renderCartItems();
-            calculateSummary();
-            showToast('🗑 Item dihapus');
+            showToast('🗑️ Item dihapus');
             
             if (Object.keys(cart).length === 0) {
-                showEmptyState();
+                location.reload();
+            } else {
+                renderCartItems();
+                calculateSummary();
             }
+        }
+
+        function clearCart() {
+            if (!confirm('Kosongkan semua pesanan?')) return;
+            cart = {};
+            saveCart();
+            location.reload();
         }
 
         function setDiscountType(type) {
             discountType = type;
             document.getElementById('btn-pct').classList.toggle('active', type === 'pct');
             document.getElementById('btn-rp').classList.toggle('active', type === 'rp');
-            document.getElementById('discount-input').placeholder = type === 'pct' ? '0%' : '0';
+            document.getElementById('discount-prefix').textContent = type === 'pct' ? '%' : 'Rp';
+            document.getElementById('discount-input').placeholder = '0';
+            document.getElementById('discount-input').value = '';
             calculateSummary();
         }
 
         function calculateSummary() {
-            const subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const subtotal = Object.values(cart).reduce((sum, item) => 
+                sum + (item.price * item.qty), 0);
             discountValue = parseFloat(document.getElementById('discount-input').value) || 0;
             
             let discountAmount = 0;
@@ -584,9 +380,7 @@
                 discountAmount = discountValue;
             }
             
-            // Ensure discount doesn't exceed subtotal
             discountAmount = Math.min(discountAmount, subtotal);
-            
             const total = subtotal - discountAmount;
             
             document.getElementById('summary-subtotal').textContent = `Rp ${formatPrice(subtotal)}`;
@@ -594,22 +388,17 @@
             const discountRow = document.getElementById('discount-row');
             if (discountAmount > 0) {
                 discountRow.style.display = 'flex';
-                document.getElementById('summary-discount').textContent = `- Rp ${formatPrice(discountAmount)}`;
+                document.getElementById('summary-discount').textContent = 
+                    `- Rp ${formatPrice(discountAmount)}`;
             } else {
                 discountRow.style.display = 'none';
             }
             
             document.getElementById('summary-total').textContent = `Rp ${formatPrice(total)}`;
             
-            // Save discount info
-            const summary = {
-                subtotal,
-                discount: discountAmount,
-                total,
-                discountType,
-                discountValue
-            };
-            localStorage.setItem('dojajann_summary', JSON.stringify(summary));
+            localStorage.setItem('dojajann_summary', JSON.stringify({
+                subtotal, discount: discountAmount, total, discountType, discountValue
+            }));
         }
 
         function formatPrice(price) {
