@@ -6,465 +6,236 @@
     <title>DoJajann - Pilih Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg: #0a0a0a;
-            --surface: #141414;
-            --surface-elevated: #1a1a1a;
-            --border: #2a2a2a;
-            --orange: #ff6b35;
-            --orange-light: #ff8c5a;
-            --orange-dark: #e55a2b;
-            --text: #ffffff;
-            --text-secondary: #a0a0a0;
-            --text-muted: #666666;
-            --success: #22c55e;
+            --bg: #0a0a0a; --surface: #141414; --surface-elevated: #1a1a1a;
+            --border: #2a2a2a; --orange: #ff6b35; --orange-light: #ff8c5a;
+            --text: #ffffff; --text-secondary: #a0a0a0; --success: #22c55e;
             --danger: #ef4444;
         }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
+            background: var(--bg); color: var(--text); min-height: 100vh;
             -webkit-font-smoothing: antialiased;
         }
-
-        /* Header */
         .header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 16px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
+            background: var(--surface); border-bottom: 1px solid var(--border);
+            padding: 16px 20px; position: sticky; top: 0; z-index: 100;
         }
-
         .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: flex; align-items: center; justify-content: space-between;
         }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+        .logo { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+        .logo span { color: var(--orange); }
+        .header-actions { display: flex; gap: 8px; }
+        .icon-btn {
+            background: var(--surface-elevated); border: 1px solid var(--border);
+            color: var(--text); width: 44px; height: 44px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 20px; transition: all 0.2s;
         }
-
-        .logo span {
-            color: var(--orange);
-        }
-
+        .icon-btn:active { transform: scale(0.95); }
         .cart-btn {
-            position: relative;
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 10px 14px;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            position: relative; background: var(--orange); border: none;
+            color: white; padding: 0 16px; width: auto; font-size: 14px;
+            font-weight: 600; gap: 6px;
         }
-
-        .cart-btn:active {
-            transform: scale(0.95);
-        }
-
         .cart-count {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: var(--orange);
-            color: white;
-            font-size: 11px;
-            font-weight: 700;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; top: -6px; right: -6px; background: white;
+            color: var(--orange); font-size: 11px; font-weight: 700;
+            width: 22px; height: 22px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
         }
-
-        /* Settings Bar */
         .settings-bar {
-            background: var(--surface);
-            padding: 16px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            background: var(--surface); padding: 16px 20px;
+            display: flex; flex-direction: column; gap: 12px;
             border-bottom: 1px solid var(--border);
         }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
+        .input-group { display: flex; flex-direction: column; gap: 6px; }
         .input-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 11px; font-weight: 600; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
-
         .input-field {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 15px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            outline: none;
-            width: 100%;
-            transition: all 0.2s;
+            background: var(--surface-elevated); border: 1px solid var(--border);
+            color: var(--text); font-size: 15px; padding: 12px 16px;
+            border-radius: 12px; outline: none; width: 100%;
         }
-
-        .input-field:focus {
-            border-color: var(--orange);
-        }
-
-        .datetime-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
+        .input-field:focus { border-color: var(--orange); }
+        .datetime-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .order-type-btn {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 14px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.2s;
+            background: var(--surface-elevated); border: 1px solid var(--border);
+            color: var(--text); padding: 14px 16px; border-radius: 12px;
+            font-size: 14px; font-weight: 500; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
         }
-
-        .order-type-btn.active {
-            background: var(--orange);
-            border-color: var(--orange);
-        }
-
-        .order-type-btn .arrow {
-            transition: transform 0.2s;
-        }
-
-        .order-type-btn.active .arrow {
-            transform: rotate(180deg);
-        }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 200;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            border-radius: 24px 24px 0 0;
-            z-index: 201;
-            transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            max-height: 70vh;
-        }
-
-        .modal.show {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .modal-close {
-            background: var(--surface-elevated);
-            border: none;
-            color: var(--text);
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-        }
-
-        .modal-body {
-            padding: 16px;
-            overflow-y: auto;
-            max-height: calc(70vh - 80px);
-        }
-
-        .order-option {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 8px;
-        }
-
-        .order-option:hover {
-            background: var(--surface-elevated);
-        }
-
-        .order-option.selected {
-            background: var(--orange);
-        }
-
-        .order-option-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--surface-elevated);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .order-option.selected .order-option-icon {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .order-option-text {
-            flex: 1;
-        }
-
-        .order-option-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .order-option-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .order-option.selected .order-option-desc {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Menu Section */
+        .order-type-btn.active { background: var(--orange); border-color: var(--orange); }
         .section-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 20px;
-            padding-bottom: 12px;
+            font-size: 13px; font-weight: 700; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            padding: 20px; padding-bottom: 12px; display: flex;
+            justify-content: space-between; align-items: center;
         }
-
+        .add-menu-btn {
+            background: var(--surface-elevated); border: 1px solid var(--border);
+            color: var(--orange); padding: 8px 14px; border-radius: 10px;
+            font-size: 13px; font-weight: 600; cursor: pointer;
+        }
         .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 0 20px 20px;
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 12px; padding: 0 20px 20px;
         }
-
         .menu-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; padding: 16px; cursor: pointer;
+            transition: all 0.2s; position: relative;
         }
-
-        .menu-card:active {
-            transform: scale(0.96);
-        }
-
-        .menu-card.in-cart {
-            border-color: var(--orange);
-            background: linear-gradient(135deg, var(--surface) 0%, rgba(255, 107, 53, 0.1) 100%);
-        }
-
-        .menu-emoji {
-            font-size: 40px;
-            margin-bottom: 12px;
-            display: block;
-        }
-
+        .menu-card:active { transform: scale(0.96); }
+        .menu-card.in-cart { border-color: var(--orange); }
+        .menu-emoji { font-size: 40px; margin-bottom: 12px; display: block; }
         .menu-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 6px;
-            line-height: 1.3;
+            font-size: 14px; font-weight: 600; color: var(--text);
+            margin-bottom: 6px; line-height: 1.3;
         }
-
         .menu-price {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--orange);
+            font-size: 15px; font-weight: 700; color: var(--orange);
         }
-
         .menu-qty-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: var(--orange);
-            color: white;
-            font-size: 12px;
-            font-weight: 700;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(0);
+            position: absolute; top: 12px; right: 12px;
+            background: var(--orange); color: white; font-size: 12px;
+            font-weight: 700; width: 28px; height: 28px;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; opacity: 0; transform: scale(0);
             transition: all 0.2s;
         }
-
-        .menu-qty-badge.show {
-            opacity: 1;
-            transform: scale(1);
+        .menu-qty-badge.show { opacity: 1; transform: scale(1); }
+        .menu-actions {
+            position: absolute; top: 12px; left: 12px;
+            display: flex; gap: 6px; 
+            opacity: 1; /* UDAH DIBENERIN: Biar selalu kelihatan di HP, gak perlu hover */
+            z-index: 10;
+            transition: opacity 0.2s;
         }
-
-        /* Bottom Bar */
+        .menu-action-btn {
+            width: 28px; height: 28px; border-radius: 8px;
+            border: none; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; font-size: 14px;
+        }
+        .edit-btn { background: var(--surface-elevated); color: var(--text); }
+        .delete-btn { background: var(--danger); color: white; }
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px); z-index: 200;
+            opacity: 0; visibility: hidden; transition: all 0.3s;
+        }
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+        .modal {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--surface); border-radius: 24px 24px 0 0;
+            z-index: 201; transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 80vh; overflow-y: auto;
+        }
+        .modal.show { transform: translateY(0); }
+        .modal-header {
+            padding: 20px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .modal-title { font-size: 18px; font-weight: 700; }
+        .modal-close {
+            background: var(--surface-elevated); border: none;
+            color: var(--text); width: 36px; height: 36px;
+            border-radius: 10px; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; font-size: 20px;
+        }
+        .modal-body { padding: 20px; }
+        .form-group { margin-bottom: 16px; }
+        .form-label {
+            display: block; font-size: 12px; font-weight: 600;
+            color: var(--text-secondary); margin-bottom: 8px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .form-input {
+            width: 100%; background: var(--surface-elevated);
+            border: 1px solid var(--border); color: var(--text);
+            font-size: 16px; padding: 14px 16px; border-radius: 12px;
+            outline: none;
+        }
+        .form-input:focus { border-color: var(--orange); }
+        .emoji-grid {
+            display: grid; grid-template-columns: repeat(6, 1fr);
+            gap: 8px; margin-top: 8px;
+        }
+        .emoji-btn {
+            aspect-ratio: 1; font-size: 28px; background: var(--surface-elevated);
+            border: 2px solid transparent; border-radius: 12px;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .emoji-btn:hover { background: var(--border); }
+        .emoji-btn.selected { border-color: var(--orange); background: rgba(255, 107, 53, 0.1); }
+        .btn-submit {
+            width: 100%; background: var(--orange); color: white;
+            border: none; border-radius: 16px; padding: 16px;
+            font-size: 16px; font-weight: 700; cursor: pointer;
+            margin-top: 8px;
+        }
+        .btn-submit:active { transform: scale(0.98); }
+        .order-option {
+            display: flex; align-items: center; gap: 16px;
+            padding: 16px; border-radius: 16px; cursor: pointer;
+            transition: all 0.2s; margin-bottom: 8px;
+        }
+        .order-option:hover { background: var(--surface-elevated); }
+        .order-option.selected { background: var(--orange); }
+        .order-option-icon {
+            width: 48px; height: 48px; background: var(--surface-elevated);
+            border-radius: 14px; display: flex; align-items: center;
+            justify-content: center; font-size: 24px;
+        }
+        .order-option.selected .order-option-icon { background: rgba(255, 255, 255, 0.2); }
+        .order-option-text { flex: 1; }
+        .order-option-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .order-option-desc { font-size: 13px; color: var(--text-secondary); }
+        .order-option.selected .order-option-desc { color: rgba(255, 255, 255, 0.8); }
         .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 16px 20px;
-            padding-bottom: calc(16px + env(safe-area-inset-bottom));
-            display: flex;
-            gap: 12px;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--surface); border-top: 1px solid var(--border);
+            padding: 16px 20px; padding-bottom: calc(16px + env(safe-area-inset-bottom));
             z-index: 50;
         }
-
         .btn-primary {
-            flex: 1;
-            background: var(--orange);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            padding: 16px 24px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s;
+            width: 100%; background: var(--orange); color: white;
+            border: none; border-radius: 16px; padding: 16px 24px;
+            font-size: 16px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-            background: var(--orange-dark);
-        }
-
-        .btn-primary:disabled {
-            background: var(--text-muted);
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            background: var(--surface-elevated);
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-
-        /* Toast */
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-primary:disabled { background: var(--text-secondary); cursor: not-allowed; }
         .toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
+            position: fixed; bottom: 100px; left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: var(--success);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 300;
-            opacity: 0;
-            transition: all 0.3s;
-            white-space: nowrap;
+            background: var(--success); color: white; padding: 14px 24px;
+            border-radius: 12px; font-size: 14px; font-weight: 600;
+            z-index: 300; opacity: 0; transition: all 0.3s; white-space: nowrap;
         }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* Safe area for bottom bar */
-        .content-padding {
-            padding-bottom: 100px;
-        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .content-padding { padding-bottom: 100px; }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-content">
             <div class="logo">Do<span>Jajann</span></div>
-            <button class="cart-btn" onclick="goToCart()">
-                🛒 <span id="cart-total">Rp 0</span>
-                <span class="cart-count" id="cart-count">0</span>
-            </button>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="openMenuModal()" title="Tambah Menu">➕</button>
+                <button class="icon-btn cart-btn" onclick="goToCart()">
+                    🛒 <span id="cart-total">Rp 0</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Settings -->
     <div class="settings-bar">
         <div class="datetime-row">
             <div class="input-group">
@@ -482,27 +253,54 @@
         </div>
         <button class="order-type-btn" id="order-type-btn" onclick="openOrderTypeModal()">
             <span id="selected-order-type">🍽 Dine In</span>
-            <span class="arrow">▼</span>
+            <span>▼</span>
         </button>
     </div>
 
-    <!-- Order Type Modal -->
-    <div class="modal-overlay" id="modal-overlay" onclick="closeOrderTypeModal()"></div>
+    <div class="modal-overlay" id="menu-modal-overlay" onclick="closeMenuModal()"></div>
+    <div class="modal" id="menu-modal">
+        <div class="modal-header">
+            <div class="modal-title" id="menu-modal-title">Tambah Menu</div>
+            <button class="modal-close" onclick="closeMenuModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="edit-menu-id">
+            <div class="form-group">
+                <label class="form-label">Ikon</label>
+                <div class="emoji-grid" id="emoji-grid"></div>
+                <input type="hidden" id="selected-emoji" value="🍽️">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Nama Menu</label>
+                <input type="text" class="form-input" id="menu-name-input" placeholder="Contoh: Nasi Goreng">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Harga (Rp)</label>
+                <input type="number" class="form-input" id="menu-price-input" placeholder="25000" min="0">
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 8px;">
+                <button class="btn-submit" onclick="saveMenu()" style="margin-top: 0;">Simpan Menu</button>
+                <button class="btn-submit" id="delete-menu-modal-btn" onclick="deleteMenuFromModal()" style="margin-top: 0; background: var(--danger); display: none;">Hapus Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="order-modal-overlay" onclick="closeOrderTypeModal()"></div>
     <div class="modal" id="order-type-modal">
         <div class="modal-header">
             <div class="modal-title">Tipe Order</div>
             <button class="modal-close" onclick="closeOrderTypeModal()">×</button>
         </div>
         <div class="modal-body">
-            <div class="order-option selected" onclick="selectOrderType('Dine In', '🍽')">
-                <div class="order-option-icon">🍽</div>
+            <div class="order-option selected" onclick="selectOrderType('Dine In', '🍽️')">
+                <div class="order-option-icon">🍽️</div>
                 <div class="order-option-text">
                     <div class="order-option-title">Dine In</div>
                     <div class="order-option-desc">Makan di tempat</div>
                 </div>
             </div>
-            <div class="order-option" onclick="selectOrderType('Take Away', '🛍')">
-                <div class="order-option-icon">🛍</div>
+            <div class="order-option" onclick="selectOrderType('Take Away', '🛍️')">
+                <div class="order-option-icon">🛍️</div>
                 <div class="order-option-text">
                     <div class="order-option-title">Take Away</div>
                     <div class="order-option-desc">Bawa pulang</div>
@@ -518,25 +316,25 @@
         </div>
     </div>
 
-    <!-- Menu Section -->
     <div class="content-padding">
-        <div class="section-title">🍱 Pilih Menu</div>
+        <div class="section-title">
+            <span>🍱 Menu</span>
+            <button class="add-menu-btn" onclick="openMenuModal()">+ Tambah</button>
+        </div>
         <div class="menu-grid" id="menu-grid"></div>
     </div>
 
-    <!-- Bottom Bar -->
     <div class="bottom-bar">
         <button class="btn-primary" id="checkout-btn" onclick="goToCart()">
             Lanjut ke Pembayaran →
         </button>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">✅ Menu ditambahkan!</div>
+    <div class="toast" id="toast"></div>
 
     <script>
-        // Data Menu
-        const menuItems = [
+        // Default menu items
+        const defaultMenuItems = [
             { id: 1, name: 'Nasi Goreng Spesial', price: 25000, emoji: '🍛' },
             { id: 2, name: 'Mie Ayam Bakso', price: 22000, emoji: '🍜' },
             { id: 3, name: 'Ayam Goreng Crispy', price: 28000, emoji: '🍗' },
@@ -551,30 +349,155 @@
             { id: 12, name: 'Air Mineral', price: 4000, emoji: '💧' }
         ];
 
-        // State
+        // Food emojis for picker
+        const foodEmojis = ['🍛','🍜','🍗','🍢','🥘','🥗','🍲','🍝','🍕','🍔','🍟','🌭','🥪','🌮','🌯','🥙','🥚','🍳','🥘','🍲','🥣','🥗','🍿','🧈','🥫','🍖','🍗','🥩','🍠','🥟','🥠','🥡','🍱','🍘','🍙','🍚','🍛','🍜','🍝','🍠','🍢','🍣','🍤','🍥','🍡','🍦','🍧','🍨','🍩','🍪','🎂','🍰','🧁','🥧','🍫','🍬','🍭','🍮','🍯','🍼','🥛','☕','🍵','🍶','🍾','🍷','🍸','🍹','🍺','🍻','🥂','🥃','🥤','🧃','🧉','🧊','🥢','🍽️','🍴','🥄','🔪','🏺'];
+
+        let menuItems = [];
         let cart = {};
         let orderType = 'Dine In';
-        let orderTypeEmoji = '🍽';
+        let orderTypeEmoji = '🍽️';
+        let selectedEmoji = '🍽️';
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            loadMenuItems();
+            renderEmojiGrid();
             renderMenu();
             setCurrentDateTime();
             loadCartFromStorage();
         });
 
-        // Set current date and time
+        function loadMenuItems() {
+            const saved = localStorage.getItem('dojajann_menu_items');
+            if (saved) {
+                menuItems = JSON.parse(saved);
+            } else {
+                menuItems = [...defaultMenuItems];
+                saveMenuItems();
+            }
+        }
+
+        function saveMenuItems() {
+            localStorage.setItem('dojajann_menu_items', JSON.stringify(menuItems));
+        }
+
+        function renderEmojiGrid() {
+            const grid = document.getElementById('emoji-grid');
+            grid.innerHTML = foodEmojis.map(emoji => `
+                <button class="emoji-btn ${emoji === selectedEmoji ? 'selected' : ''}" 
+                        onclick="selectEmoji('${emoji}')">${emoji}</button>
+            `).join('');
+        }
+
+        function selectEmoji(emoji) {
+            selectedEmoji = emoji;
+            document.getElementById('selected-emoji').value = emoji;
+            renderEmojiGrid();
+        }
+
+        function openMenuModal(editId = null) {
+            document.getElementById('menu-modal-overlay').classList.add('show');
+            document.getElementById('menu-modal').classList.add('show');
+            
+            const deleteModalBtn = document.getElementById('delete-menu-modal-btn');
+
+            if (editId) {
+                const item = menuItems.find(i => i.id === editId);
+                document.getElementById('menu-modal-title').textContent = 'Edit Menu';
+                document.getElementById('edit-menu-id').value = editId;
+                document.getElementById('menu-name-input').value = item.name;
+                document.getElementById('menu-price-input').value = item.price;
+                selectEmoji(item.emoji);
+                deleteModalBtn.style.display = 'block'; // Munculin tombol hapus di Modal
+            } else {
+                document.getElementById('menu-modal-title').textContent = 'Tambah Menu';
+                document.getElementById('edit-menu-id').value = '';
+                document.getElementById('menu-name-input').value = '';
+                document.getElementById('menu-price-input').value = '';
+                selectEmoji('🍽️');
+                deleteModalBtn.style.display = 'none'; // Sembunyiin tombol hapus pas nambah baru
+            }
+        }
+
+        function closeMenuModal() {
+            document.getElementById('menu-modal-overlay').classList.remove('show');
+            document.getElementById('menu-modal').classList.remove('show');
+        }
+
+        function saveMenu() {
+            const id = document.getElementById('edit-menu-id').value;
+            const name = document.getElementById('menu-name-input').value.trim();
+            const price = parseInt(document.getElementById('menu-price-input').value) || 0;
+            const emoji = document.getElementById('selected-emoji').value;
+
+            if (!name || price <= 0) {
+                showToast('❌ Nama dan harga wajib diisi!');
+                return;
+            }
+
+            if (id) {
+                // Edit existing
+                const index = menuItems.findIndex(i => i.id === parseInt(id));
+                if (index !== -1) {
+                    menuItems[index] = { ...menuItems[index], name, price, emoji };
+                    showToast('✅ Menu diperbarui!');
+                }
+            } else {
+                // Add new
+                const newId = Math.max(...menuItems.map(i => i.id), 0) + 1;
+                menuItems.push({ id: newId, name, price, emoji });
+                showToast('✅ Menu ditambahkan!');
+            }
+
+            saveMenuItems();
+            renderMenu();
+            closeMenuModal();
+        }
+
+        // FUNGSI BARU: Buat hapus dari dalem Modal Custom Menu
+        function deleteMenuFromModal() {
+            const id = parseInt(document.getElementById('edit-menu-id').value);
+            if (id && confirm('Yakin mau hapus menu ini bro?')) {
+                menuItems = menuItems.filter(i => i.id !== id);
+                delete cart[id];
+                saveMenuItems();
+                renderMenu();
+                updateCartUI();
+                closeMenuModal();
+                showToast('🗑️ Menu berhasil dihapus');
+            }
+        }
+
+        function deleteMenuItem(id, event) {
+            event.stopPropagation();
+            if (confirm('Hapus menu ini?')) {
+                menuItems = menuItems.filter(i => i.id !== id);
+                delete cart[id];
+                saveMenuItems();
+                renderMenu();
+                updateCartUI();
+                showToast('🗑️ Menu dihapus');
+            }
+        }
+
+        function editMenuItem(id, event) {
+            event.stopPropagation();
+            openMenuModal(id);
+        }
+
         function setCurrentDateTime() {
             const now = new Date();
             document.getElementById('order-date').value = now.toISOString().split('T')[0];
             document.getElementById('order-time').value = now.toTimeString().slice(0, 5);
         }
 
-        // Render Menu
         function renderMenu() {
             const grid = document.getElementById('menu-grid');
             grid.innerHTML = menuItems.map(item => `
                 <div class="menu-card ${cart[item.id] ? 'in-cart' : ''}" onclick="addToCart(${item.id})">
+                    <div class="menu-actions">
+                        <button class="menu-action-btn edit-btn" onclick="editMenuItem(${item.id}, event)">✏️</button>
+                        <button class="menu-action-btn delete-btn" onclick="deleteMenuItem(${item.id}, event)">🗑️</button>
+                    </div>
                     <span class="menu-emoji">${item.emoji}</span>
                     <div class="menu-name">${item.name}</div>
                     <div class="menu-price">Rp ${formatPrice(item.price)}</div>
@@ -585,9 +508,10 @@
             `).join('');
         }
 
-        // Add to Cart
         function addToCart(itemId) {
             const item = menuItems.find(i => i.id === itemId);
+            if (!item) return;
+            
             if (!cart[itemId]) {
                 cart[itemId] = { ...item, qty: 1 };
             } else {
@@ -598,7 +522,6 @@
             showToast(`✅ ${item.name} ditambahkan!`);
         }
 
-        // Update Cart UI
         function updateCartUI() {
             const total = Object.values(cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
             const count = Object.values(cart).reduce((sum, item) => sum + item.qty, 0);
@@ -607,7 +530,6 @@
             document.getElementById('cart-count').textContent = count;
             document.getElementById('cart-count').style.display = count > 0 ? 'flex' : 'none';
             
-            // Update badges
             menuItems.forEach(item => {
                 const badge = document.getElementById(`badge-${item.id}`);
                 if (badge) {
@@ -622,19 +544,16 @@
                 }
             });
 
-            // Update checkout button
-            const checkoutBtn = document.getElementById('checkout-btn');
-            checkoutBtn.disabled = count === 0;
+            document.getElementById('checkout-btn').disabled = count === 0;
         }
 
-        // Order Type Modal
         function openOrderTypeModal() {
-            document.getElementById('modal-overlay').classList.add('show');
+            document.getElementById('order-modal-overlay').classList.add('show');
             document.getElementById('order-type-modal').classList.add('show');
         }
 
         function closeOrderTypeModal() {
-            document.getElementById('modal-overlay').classList.remove('show');
+            document.getElementById('order-modal-overlay').classList.remove('show');
             document.getElementById('order-type-modal').classList.remove('show');
         }
 
@@ -643,7 +562,6 @@
             orderTypeEmoji = emoji;
             document.getElementById('selected-order-type').textContent = `${emoji} ${type}`;
             
-            // Update selected state
             document.querySelectorAll('.order-option').forEach(opt => opt.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
             
@@ -651,12 +569,10 @@
             closeOrderTypeModal();
         }
 
-        // Format Price
         function formatPrice(price) {
             return price.toLocaleString('id-ID');
         }
 
-        // Toast
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -664,7 +580,6 @@
             setTimeout(() => toast.classList.remove('show'), 2000);
         }
 
-        // Save to Storage
         function saveCartToStorage() {
             localStorage.setItem('dojajann_cart', JSON.stringify(cart));
             saveOrderSettings();
@@ -692,14 +607,13 @@
                 document.getElementById('order-time').value = settings.time || '';
                 document.getElementById('customer-name').value = settings.customer || '';
                 orderType = settings.orderType || 'Dine In';
-                orderTypeEmoji = settings.orderTypeEmoji || '🍽';
+                orderTypeEmoji = settings.orderTypeEmoji || '🍽️';
                 document.getElementById('selected-order-type').textContent = `${orderTypeEmoji} ${orderType}`;
             }
             
             updateCartUI();
         }
 
-        // Navigate to Cart
         function goToCart() {
             if (Object.keys(cart).length === 0) {
                 showToast('⚠️ Keranjang masih kosong!');
@@ -709,7 +623,6 @@
             window.location.href = 'cart.html';
         }
 
-        // Auto save on input change
         document.getElementById('order-date').addEventListener('change', saveOrderSettings);
         document.getElementById('order-time').addEventListener('change', saveOrderSettings);
         document.getElementById('customer-name').addEventListener('input', saveOrderSettings);
